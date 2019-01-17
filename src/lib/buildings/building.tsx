@@ -1,5 +1,6 @@
 import { BuildingType } from '.'
 import { Resource, Resources } from '../resources'
+import { Modifier } from '../modifiers'
 import { BASE_PRODUCTION } from '../constants'
 
 export class Building {
@@ -12,6 +13,7 @@ export class Building {
   consumes: Resources
   prettyName: string
   description: string
+  modifiers: Array<Modifier>
   active: boolean
 
   constructor(type: BuildingType, produces: Resource) {
@@ -22,6 +24,7 @@ export class Building {
     this.produces = produces
     this.cost = {}
     this.consumes = {}
+    this.modifiers = []
     this.prettyName = 'Generic Building'
     this.description = 'Generic Description'
     this.active = true
@@ -38,7 +41,7 @@ export class Building {
   }
 
   calcProduced(resources: Resources): number {
-    const oneHouse = this.production + this.calcModifier(/* this.modifiers */)
+    const oneHouse = this.production * this.calcModifier(this.modifiers)
     let count = this.count
 
     if (!this.active) {
@@ -82,8 +85,12 @@ export class Building {
 
     return true
   }
-  calcModifier(): number {
-    return 0
+  calcModifier(modifiers: Array<Modifier>): number {
+    if (modifiers.length === 0) {
+      return 1
+    }
+
+    return modifiers.reduce((total, mod) => mod.value + total, 0)
   }
   toggleActive(): void {
     this.active = !this.active

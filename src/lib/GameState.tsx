@@ -81,6 +81,10 @@ export class GameState {
 
   updateResource(name: Resource, value: number) {
     this.resources[name] = this.resources[name] + value
+
+    if (this.resources[name] > this.resources.max) {
+      this.resources[name] = this.resources.max
+    }
   }
 
   build = (e: any) => {

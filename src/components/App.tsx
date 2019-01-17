@@ -8,6 +8,7 @@ import { GameState } from '../lib/GameState'
 import BuildQueue from './BuildQueue'
 import Buildings from './Buildings'
 import Resources from './Resources'
+import Footer from './Footer'
 
 interface Props {}
 interface State {
@@ -54,7 +55,8 @@ class App extends Component<Props, State> {
         </span>
         <header>
           <div className="flex">
-            <h1 className="title">THE LAIRD (alpha)</h1>
+            <h1 className="title">THE LAIRD</h1>
+            <h2>(alpha)</h2>
           </div>
         </header>
         <div className="flex">
@@ -74,21 +76,11 @@ class App extends Component<Props, State> {
           </div>
 
           <div className="flex-inner nes-container with-title queue-container">
-            <BuildQueue queue={game.buildQueue} />
+            <BuildQueue queue={game.buildQueue} buildings={game.buildings} />
           </div>
         </div>
 
-        <footer>
-          <p>
-            Date: {this.date()} ({this.state.game.ticks})
-          </p>
-          <p>
-            <span>Created by Inhji with Typescript, </span>
-            <a href="https://nostalgic-css.github.io/NES.css/">NES.css</a>
-            <span> and </span>
-            <i className="nes-icon heart is-small" />
-          </p>
-        </footer>
+        <Footer date={this.date()} ticks={this.state.game.ticks} />
       </div>
     )
   }

@@ -1,11 +1,14 @@
 import * as React from 'react'
-import { Queue } from '../lib/buildings'
+import { Queue, Buildings } from '../lib/buildings'
 
-const BuildQueue: React.StatelessComponent<{ queue: Queue }> = ({ queue }) => (
+const BuildQueue: React.StatelessComponent<{
+  queue: Queue
+  buildings: Buildings
+}> = ({ queue, buildings }) => (
   <div className="build-queue">
     {Object.keys(queue).map(key => (
       <div className="item">
-        {key}:{' '}
+        <span>Building {buildings[key].prettyName}...</span>
         <progress
           value={queue[key]}
           max="100"

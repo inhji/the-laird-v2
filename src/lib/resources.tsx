@@ -6,7 +6,8 @@ export enum Resource {
   CROP = 'CROP',
   BREAD = 'BREAD',
   FLOUR = 'FLOUR',
-  ALLTHELOVEINTHEWORLD = 'ALLTHELOVEINTHEWORLD'
+  PLANK = 'PLANK',
+  LOVE = 'LOVE'
 }
 
 export interface Resources {

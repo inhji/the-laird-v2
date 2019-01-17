@@ -19,10 +19,14 @@ class Icon extends React.Component<Props, State> {
 
   convertNameToXY(name: string): XY {
     switch (name) {
+      case Resource.LOVE:
+        return { x: 16 * 3, y: 16 * 7 }
       case Resource.GOLD:
         return { x: 16 * 6, y: 16 * 14 }
       case Resource.WOOD:
         return { x: 16 * 5, y: 16 * 11 }
+      case Resource.PLANK:
+        return { x: 16 * 6, y: 16 * 11 }
       case Resource.BREAD:
         return { x: 16 * 31, y: 16 * 7 }
       case Resource.WATER:

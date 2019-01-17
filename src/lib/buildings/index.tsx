@@ -7,6 +7,7 @@ export { Well } from './well'
 export { Farm } from './farm'
 export { Bakery } from './bakery'
 export { Mill } from './mill'
+export { Sawmill } from './sawmill'
 
 export interface Buildings {
   [building: string]: Building
@@ -17,10 +18,11 @@ export interface Queue {
 }
 
 export enum BuildingType {
-  LOGGER = 'LOGGER',
-  WELL = 'WELL',
-  FARM = 'FARM',
-  BAKERY = 'BAKERY',
-  MILL = 'MILL',
-  CASTLE = 'CASTLE'
+  CASTLE,
+  WELL,
+  LOGGER,
+  SAWMILL,
+  FARM,
+  MILL,
+  BAKERY
 }

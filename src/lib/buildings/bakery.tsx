@@ -9,7 +9,7 @@ export class Bakery extends Building {
     this.consumes = {
       [Resource.WATER]: 1,
       [Resource.FLOUR]: 2,
-      [Resource.WOOD]: 1
+      [Resource.PLANK]: 1
     }
     this.prettyName = 'Bakery'
     this.description = 'Let them eat cake.'

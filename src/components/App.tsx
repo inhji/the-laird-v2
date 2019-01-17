@@ -6,8 +6,8 @@ import { BASE_GAME_SPEED, DATE_MULTIPLIER, DATE_OFFSET } from '../lib/constants'
 import { GameState } from '../lib/GameState'
 
 import BuildQueue from './BuildQueue'
-import Resources from './Resources'
 import Buildings from './Buildings'
+import Resources from './Resources'
 
 interface Props {}
 interface State {
@@ -37,14 +37,6 @@ class App extends Component<Props, State> {
     ).toLocaleDateString()
   }
 
-  build = (e: any) => {
-    const type = e.target.id
-
-    if (!this.state.game.buildQueue[type]) {
-      this.state.game.buildQueue[type] = 0
-    }
-  }
-
   toggleActive = (e: any) => {
     const type = e.target.id
 
@@ -66,7 +58,7 @@ class App extends Component<Props, State> {
           </div>
         </header>
         <div className="flex">
-          <div className="flex-inner nes-container with-title">
+          <div className="flex-inner nes-container with-title resource-container">
             <p className="title">Resources</p>
             <Resources resources={game.resources} />
           </div>
@@ -76,22 +68,27 @@ class App extends Component<Props, State> {
 
             <Buildings
               buildings={game.buildings}
-              build={this.build}
+              build={this.state.game.build}
               toggleActive={this.toggleActive}
             />
           </div>
-        </div>
-        <div className="flex">
-          <div className="flex-inner">
+
+          <div className="flex-inner nes-container with-title queue-container">
             <BuildQueue queue={game.buildQueue} />
           </div>
         </div>
 
-        <div className="flex">
+        <footer>
           <p>
             Date: {this.date()} ({this.state.game.ticks})
           </p>
-        </div>
+          <p>
+            <span>Created by Inhji with Typescript, </span>
+            <a href="https://nostalgic-css.github.io/NES.css/">NES.css</a>
+            <span> and </span>
+            <i className="nes-icon heart is-small" />
+          </p>
+        </footer>
       </div>
     )
   }

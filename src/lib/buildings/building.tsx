@@ -15,6 +15,7 @@ export class Building {
   description: string
   modifiers: Array<Modifier>
   active: boolean
+  root: boolean
 
   constructor(type: BuildingType, produces: Resource) {
     this.type = type
@@ -28,6 +29,7 @@ export class Building {
     this.prettyName = 'Generic Building'
     this.description = 'Generic Description'
     this.active = true
+    this.root = false
   }
 
   calcConsumed(resources: Resources): Resources {

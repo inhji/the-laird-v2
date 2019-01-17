@@ -8,7 +8,8 @@ import {
   Bakery,
   Mill,
   Queue,
-  Castle
+  Castle,
+  Sawmill
 } from './buildings'
 
 import { STARTING_GOLD, BASE_BUILD_SPEED, BASE_GAME_SPEED } from './constants'
@@ -24,16 +25,18 @@ export class GameState {
     this.resources = {
       [Resource.GOLD]: STARTING_GOLD,
       [Resource.WOOD]: 0,
-      [Resource.BREAD]: 0,
       [Resource.WATER]: 0,
+      [Resource.PLANK]: 0,
       [Resource.CROP]: 0,
-      [Resource.FLOUR]: 0
+      [Resource.FLOUR]: 0,
+      [Resource.BREAD]: 0
     }
 
     this.buildings = {
       [BuildingType.CASTLE]: new Castle(),
       [BuildingType.WELL]: new Well(),
       [BuildingType.LOGGER]: new Logger(),
+      [BuildingType.SAWMILL]: new Sawmill(),
       [BuildingType.FARM]: new Farm(),
       [BuildingType.MILL]: new Mill(),
       [BuildingType.BAKERY]: new Bakery()
@@ -57,7 +60,7 @@ export class GameState {
       for (let resource in building.consumes) {
         this.updateResource(
           resource as Resource,
-          -(building.consumes[resource] * building.working)
+          -((building.consumes[resource] * building.working) / 100)
         )
       }
     }
@@ -78,6 +81,26 @@ export class GameState {
 
   updateResource(name: Resource, value: number) {
     this.resources[name] = this.resources[name] + value
+  }
+
+  build = (e: any) => {
+    const type = e.target.id
+    const game = this
+    const resourceCosts = game.buildings[type].cost
+
+    if (!game.buildQueue[type]) {
+      for (let key in resourceCosts) {
+        const cost = resourceCosts[key]
+
+        if (game.resources[key] >= cost) {
+          game.resources[key] = game.resources[key] - cost
+        } else {
+          return
+        }
+      }
+
+      game.buildQueue[type] = 0
+    }
   }
 
   update() {

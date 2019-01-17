@@ -12,25 +12,38 @@ import {
   Sawmill
 } from './buildings'
 
-import { STARTING_GOLD, BASE_BUILD_SPEED, BASE_GAME_SPEED } from './constants'
+import {
+  STARTING_GOLD,
+  BASE_BUILD_SPEED,
+  BASE_GAME_SPEED,
+  BASE_POPULATION
+} from './constants'
 
-export class GameState {
+interface Production {
+  [resource: string]: number
+}
+
+export class Game {
   ticks: number
   resources: Resources
   buildings: Buildings
+  population: number
   buildQueue: Queue
+  production: Production
 
   constructor() {
     this.ticks = 0
+    this.population = 0
     this.resources = {
       [Resource.GOLD]: STARTING_GOLD,
-      [Resource.WOOD]: 0,
       [Resource.WATER]: 0,
+      [Resource.WOOD]: 0,
       [Resource.PLANK]: 0,
       [Resource.CROP]: 0,
       [Resource.FLOUR]: 0,
       [Resource.BREAD]: 0
     }
+    this.production = {}
 
     this.buildings = {
       [BuildingType.CASTLE]: new Castle(),
@@ -49,6 +62,24 @@ export class GameState {
     this.ticks++
   }
 
+  updateTitle() {
+    document.title = `The Laird - ${this.ticks}`
+  }
+
+  updatePopulation() {
+    const totalPopulation = Object.keys(this.buildings).reduce((sum, name) => {
+      const building = this.buildings[name]
+      let population = 0
+
+      if (!building.root && building.active) {
+        population = building.working
+      }
+
+      return sum + population
+    }, 0)
+    this.population = BASE_POPULATION - totalPopulation
+  }
+
   updateBuildings() {
     for (let name in this.buildings) {
       const building = this.buildings[name]
@@ -64,6 +95,23 @@ export class GameState {
         )
       }
     }
+  }
+
+  updateProduction() {
+    Object.keys(this.resources).forEach(key => {
+      const resource = key as Resource
+      this.production[key] = this.calcProductionFor(resource, this.buildings)
+    })
+  }
+
+  calcProductionFor(resource: Resource, buildings: Buildings) {
+    return Object.keys(buildings).reduce((sum, type) => {
+      if (buildings[type].produces === resource) {
+        return sum + buildings[type].working
+      } else {
+        return sum
+      }
+    }, 0)
   }
 
   updateBuildQueue() {
@@ -109,8 +157,11 @@ export class GameState {
 
   update() {
     this.updateTicks()
+    this.updateTitle()
     this.updateBuildings()
     this.updateBuildQueue()
+    this.updatePopulation()
+    this.updateProduction()
     return this
   }
 }

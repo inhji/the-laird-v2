@@ -1,5 +1,7 @@
 import * as React from 'react'
 import { Building as BuildingClass } from '../lib/buildings'
+import Icon from './Icon'
+import { Resource } from '../lib/resources'
 
 interface Props {
   building: BuildingClass
@@ -68,11 +70,9 @@ class Building extends React.Component<Props, State> {
         <div className="description grey">{building.description}</div>
         {building.root === false && (
           <div className="cost grey">
-            Building Cost:{' '}
+            Build: <Icon name={Resource.GOLD} />{' '}
             {Object.keys(building.cost).map(resource => (
-              <span>
-                {building.cost[resource]} {resource}
-              </span>
+              <span>{building.cost[resource]}</span>
             ))}
           </div>
         )}

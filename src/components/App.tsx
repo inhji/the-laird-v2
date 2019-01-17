@@ -3,23 +3,24 @@ import './App.css'
 
 import { BASE_GAME_SPEED, DATE_MULTIPLIER, DATE_OFFSET } from '../lib/constants'
 
-import { GameState } from '../lib/GameState'
+import { Game } from '../lib/game'
 
 import BuildQueue from './BuildQueue'
 import Buildings from './Buildings'
 import Resources from './Resources'
 import Footer from './Footer'
+import Stats from './Stats'
 
 interface Props {}
 interface State {
-  game: GameState
+  game: Game
 }
 
 class App extends Component<Props, State> {
   constructor(props: Props) {
     super(props)
 
-    this.state = { game: new GameState() }
+    this.state = { game: new Game() }
   }
 
   componentDidMount() {
@@ -59,10 +60,26 @@ class App extends Component<Props, State> {
             <h2>(alpha)</h2>
           </div>
         </header>
-        <div className="flex">
-          <div className="flex-inner nes-container with-title resource-container">
-            <p className="title">Resources</p>
-            <Resources resources={game.resources} />
+        <div className="flex space-evenly">
+          <div className="flex-inner left-side">
+            <div className="flex vertical">
+              <div className="flex-inner nes-container with-title resource-container">
+                <p className="title">Stats</p>
+                <Stats
+                  ticks={game.ticks}
+                  date={this.date()}
+                  population={game.population}
+                />
+              </div>
+              <div className="flex-inner nes-container with-title resource-container">
+                <p className="title">Resources</p>
+                <Resources
+                  resources={game.resources}
+                  buildings={game.buildings}
+                  calcProductionFor={game.calcProductionFor}
+                />
+              </div>
+            </div>
           </div>
 
           <div className="flex-inner nes-container with-title building-container">
@@ -75,12 +92,21 @@ class App extends Component<Props, State> {
             />
           </div>
 
-          <div className="flex-inner nes-container with-title queue-container">
-            <BuildQueue queue={game.buildQueue} buildings={game.buildings} />
+          <div className="flex-inner right-side">
+            <div className="flex vertical">
+              <div className="flex-inner nes-container with-title queue-container">
+                <p className="title">Queue</p>
+
+                <BuildQueue
+                  queue={game.buildQueue}
+                  buildings={game.buildings}
+                />
+              </div>
+            </div>
           </div>
         </div>
 
-        <Footer date={this.date()} ticks={this.state.game.ticks} />
+        <Footer />
       </div>
     )
   }

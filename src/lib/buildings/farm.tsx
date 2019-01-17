@@ -3,7 +3,7 @@ import { BuildingType, Building } from '../buildings'
 
 export class Farm extends Building {
   constructor(count: number = 0) {
-    super(BuildingType.WELL, Resource.CROP)
+    super(BuildingType.FARM, Resource.CROP)
     this.count = count
     this.cost[Resource.GOLD] = 40
     this.consumes = {

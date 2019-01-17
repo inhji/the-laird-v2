@@ -7,8 +7,11 @@ const Resources: React.StatelessComponent<{ resources: ResourcesType }> = ({
 }) => (
   <div className="resources">
     {Object.keys(resources).map(resource => (
-      <div>
-        <Icon name={resource} /> {resource}: {resources[resource].toFixed(1)}
+      <div className="flex">
+        <div className="flex-inner">
+          <Icon name={resource} /> {resource}
+        </div>
+        <div className="flex-inner">{resources[resource].toFixed(1)}</div>
       </div>
     ))}
   </div>

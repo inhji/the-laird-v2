@@ -141,6 +141,14 @@ export class Game {
     const resourceCosts = game.buildings[type].cost
 
     if (!game.buildQueue[type]) {
+      const allResourcesAvailable = Object.keys(resourceCosts).every(key => {
+        const cost = resourceCosts[key]
+
+        return game.resources[key] >= cost
+      })
+
+      if (!allResourcesAvailable) return
+
       for (let key in resourceCosts) {
         const cost = resourceCosts[key]
 

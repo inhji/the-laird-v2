@@ -70,9 +70,11 @@ class Building extends React.Component<Props, State> {
         <div className="description grey">{building.description}</div>
         {building.root === false && (
           <div className="cost grey">
-            Build: <Icon name={Resource.GOLD} />{' '}
+            Build:{' '}
             {Object.keys(building.cost).map(resource => (
-              <span>{building.cost[resource]}</span>
+              <span>
+                <Icon name={resource} /> {building.cost[resource]}{' '}
+              </span>
             ))}
           </div>
         )}

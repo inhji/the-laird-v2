@@ -5,7 +5,10 @@ export class Sawmill extends Building {
   constructor(count: number = 0) {
     super(BuildingType.SAWMILL, Resource.PLANK)
     this.count = count
-    this.cost[Resource.GOLD] = 15
+    this.cost = {
+      [Resource.GOLD]: 15,
+      [Resource.PLANK]: 10
+    }
     this.consumes = {
       [Resource.WATER]: 1,
       [Resource.WOOD]: 3

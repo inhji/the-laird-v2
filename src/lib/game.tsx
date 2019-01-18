@@ -38,7 +38,7 @@ export class Game {
       [Resource.GOLD]: STARTING_GOLD,
       [Resource.WATER]: 0,
       [Resource.WOOD]: 0,
-      [Resource.PLANK]: 0,
+      [Resource.PLANK]: 50,
       [Resource.CROP]: 0,
       [Resource.FLOUR]: 0,
       [Resource.BREAD]: 0

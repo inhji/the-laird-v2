@@ -9,14 +9,17 @@ import {
   Mill,
   Queue,
   Castle,
-  Sawmill
+  Sawmill,
+  Masonry
 } from './buildings'
 
 import {
-  STARTING_GOLD,
   BASE_BUILD_SPEED,
   BASE_GAME_SPEED,
-  BASE_POPULATION
+  BASE_POPULATION,
+  STARTING_GOLD,
+  STARTING_STONE,
+  STARTING_PLANKS
 } from './constants'
 
 interface Production {
@@ -37,8 +40,9 @@ export class Game {
     this.resources = {
       [Resource.GOLD]: STARTING_GOLD,
       [Resource.WATER]: 0,
+      [Resource.STONE]: STARTING_STONE,
       [Resource.WOOD]: 0,
-      [Resource.PLANK]: 50,
+      [Resource.PLANK]: STARTING_PLANKS,
       [Resource.CROP]: 0,
       [Resource.FLOUR]: 0,
       [Resource.BREAD]: 0
@@ -48,6 +52,7 @@ export class Game {
     this.buildings = {
       [BuildingType.CASTLE]: new Castle(),
       [BuildingType.WELL]: new Well(),
+      [BuildingType.MASONRY]: new Masonry(),
       [BuildingType.LOGGER]: new Logger(),
       [BuildingType.SAWMILL]: new Sawmill(),
       [BuildingType.FARM]: new Farm(),
@@ -135,19 +140,26 @@ export class Game {
     }
   }
 
+  testResourcesAvailable(costs: Resources): boolean {
+    return Object.keys(costs).every(key => {
+      const cost = costs[key]
+
+      return this.resources[key] >= cost
+    })
+  }
+
+  testPopulationSufficient(): boolean {
+    return this.population >= 1
+  }
+
   build = (e: any) => {
     const type = e.target.id
     const game = this
     const resourceCosts = game.buildings[type].cost
 
     if (!game.buildQueue[type]) {
-      const allResourcesAvailable = Object.keys(resourceCosts).every(key => {
-        const cost = resourceCosts[key]
-
-        return game.resources[key] >= cost
-      })
-
-      if (!allResourcesAvailable) return
+      if (!this.testResourcesAvailable(resourceCosts)) return
+      if (!this.testPopulationSufficient()) return
 
       for (let key in resourceCosts) {
         const cost = resourceCosts[key]

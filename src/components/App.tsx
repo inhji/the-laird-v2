@@ -51,8 +51,11 @@ class App extends Component<Props, State> {
     return (
       <div>
         <span className="laird">
-          <p className="nes-balloon from-right">Greetings, thrall!</p>
-          <i className="nes-octocat" />
+          <i className="nes-mario image" />
+          <p className="nes-balloon from-left text">
+            Greetings, thrall!
+            <br /> You are mine now!
+          </p>
         </span>
         <header>
           <div className="flex">

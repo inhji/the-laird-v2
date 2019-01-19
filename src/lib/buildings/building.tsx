@@ -32,7 +32,7 @@ export class Building {
     this.root = false
   }
 
-  calcConsumed(resources: Resources): Resources {
+  calcConsumed(): Resources {
     const result: Resources = {}
 
     Object.keys(this.consumes).forEach(resource => {
@@ -76,6 +76,15 @@ export class Building {
     this.working = 0
     return 0
   }
+
+  calcModifier(modifiers: Array<Modifier>): number {
+    if (modifiers.length === 0) {
+      return 1
+    }
+
+    return modifiers.reduce((total, mod) => mod.value + total, 0)
+  }
+
   canProduce(count: number, consumes: Resources, resources: Resources) {
     for (let key in consumes) {
       const resource = consumes[key]
@@ -87,13 +96,15 @@ export class Building {
 
     return true
   }
-  calcModifier(modifiers: Array<Modifier>): number {
-    if (modifiers.length === 0) {
-      return 1
-    }
 
-    return modifiers.reduce((total, mod) => mod.value + total, 0)
+  canBeBuilt(resources: Resources) {
+    return Object.keys(this.cost).every(key => {
+      const cost = this.cost[key]
+
+      return resources[key] >= cost
+    })
   }
+
   toggleActive(): void {
     this.active = !this.active
     console.log(

@@ -35,11 +35,22 @@ footer {
 
 .laird {
   position: absolute;
-  top: 1rem;
-  right: 1rem;
+  bottom: 1rem;
+  left: 1rem;
   z-index: 999;
   display: flex;
   height: 100px;
+}
+
+.laird .image {
+  position: relative;
+  display: inline-block;
+  width: 84px;
+  height: 90px;
+}
+
+.laird .text {
+  bottom: 4rem;
 }
 
 .grey {
@@ -56,30 +67,13 @@ footer {
   background-position: -16px 0;
 }
 
-.flex {
-  display: flex;
-  justify-content: center;
-}
-
-.flex.vertical {
-  flex-direction: column;
-}
-
-.flex.space-between {
-  justify-content: space-between;
-}
-
-.flex.space-evenly {
-  justify-content: space-evenly;
-}
-
 .buttons {
   float: right;
   clear: both;
 }
 
-.buttons a {
-  margin-left: 0.5rem;
+.buttons button {
+  margin-left: 1rem;
 }
 
 .building-container {

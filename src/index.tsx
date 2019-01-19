@@ -3,6 +3,7 @@ import ReactDOM from 'react-dom'
 
 import 'nes.css/css/nes.min.css'
 import './index.css'
+import './styles/flex.css'
 
 import App from './components/App'
 import * as serviceWorker from './serviceWorker'

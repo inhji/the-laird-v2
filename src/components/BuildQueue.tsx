@@ -14,7 +14,7 @@ const BuildQueue: React.StatelessComponent<{
         <progress
           value={queue[key]}
           max="100"
-          className="nes-progress is-success"
+          className="nes-progress is-primary"
         />
       </div>
     ))}

@@ -8,6 +8,7 @@ export { Farm } from './farm'
 export { Bakery } from './bakery'
 export { Mill } from './mill'
 export { Sawmill } from './sawmill'
+export { Masonry } from './masonry'
 
 export interface Buildings {
   [building: string]: Building
@@ -20,6 +21,7 @@ export interface Queue {
 export enum BuildingType {
   CASTLE,
   WELL,
+  MASONRY,
   LOGGER,
   SAWMILL,
   FARM,

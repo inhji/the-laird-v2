@@ -7,7 +7,7 @@ export class Logger extends Building {
     this.count = count
     this.cost = {
       [Resource.GOLD]: 10,
-      [Resource.PLANK]: 10
+      [Resource.PLANK]: 20
     }
     this.prettyName = 'Logger'
     this.description = 'Logging crititcal trees.'

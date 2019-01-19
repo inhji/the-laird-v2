@@ -1,5 +1,4 @@
 export enum Resource {
-  NOTHING = 'NOTHING',
   WATER = 'WATR',
   WOOD = 'WOOD',
   GOLD = 'GOLD',
@@ -7,6 +6,7 @@ export enum Resource {
   BREAD = 'BREA',
   FLOUR = 'FLOR',
   PLANK = 'PLNK',
+  STONE = 'STNE',
   LOVE = 'LOVE'
 }
 

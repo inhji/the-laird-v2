@@ -1,7 +1,7 @@
 import * as React from 'react'
+import classnames from 'classnames'
 import { Building as BuildingClass } from '../lib/buildings'
 import Icon from './Icon'
-import { Resource } from '../lib/resources'
 
 interface Props {
   building: BuildingClass
@@ -23,6 +23,37 @@ class Building extends React.Component<Props, State> {
     return this.props.building.active ? 'name' : 'name grey'
   }
 
+  activeButton() {
+    const isActive = this.props.building.active
+    const classes = classnames(
+      'nes-btn',
+      { 'is-error': isActive },
+      { 'is-success': !isActive }
+    )
+
+    return (
+      <button
+        id={this.type()}
+        onClick={this.props.toggleActive}
+        className={classes}
+      >
+        {isActive ? 'zZz' : 'GO!'}
+      </button>
+    )
+  }
+
+  buildButton() {
+    return (
+      <button
+        id={this.type()}
+        onClick={this.props.build}
+        className="nes-btn is-primary build"
+      >
+        +1
+      </button>
+    )
+  }
+
   buildingName() {
     const building = this.props.building
 
@@ -39,36 +70,27 @@ class Building extends React.Component<Props, State> {
   }
 
   render() {
-    const { building, build, toggleActive } = this.props
+    const { building, build } = this.props
 
     return (
       <div className="building">
         {building.root === false && (
           <div className="buttons">
-            <a
-              href="#"
-              id={this.type()}
-              onClick={build}
-              className="nes-btn is-success build"
-            >
-              +1
-            </a>
-            <a
-              href="#"
-              id={this.type()}
-              onClick={toggleActive}
-              className="nes-btn build"
-            >
-              zZz
-            </a>
+            {this.buildButton()}
+            {this.activeButton()}
           </div>
         )}
         <div>
           <span className="active">{this.activeText()}</span>
-          <span className={this.activeClass()}>{this.buildingName()}</span>
+          <span className={this.activeClass()} title={building.description}>
+            {this.buildingName()}
+          </span>
         </div>
-        <div className="description grey">{building.description}</div>
-        {building.root === false && (
+
+        <div className="production grey">
+          Produces: <Icon name={building.produces} />
+        </div>
+        {!building.root && (
           <div className="cost grey">
             Build:{' '}
             {Object.keys(building.cost).map(resource => (

@@ -35,6 +35,8 @@ class Icon extends React.Component<Props, State> {
         return { x: 16 * 27, y: 16 * 12 }
       case Resource.FLOUR:
         return { x: 16 * 28, y: 16 * 11 }
+      case Resource.STONE:
+        return { x: 16 * 8, y: 16 * 5 }
       default:
         return { x: 0, y: 0 }
     }

@@ -7,7 +7,7 @@ export class Well extends Building {
     this.count = count
     this.cost = {
       [Resource.GOLD]: 5,
-      [Resource.PLANK]: 10
+      [Resource.STONE]: 10
     }
     this.prettyName = 'Well'
     this.description = 'Water is essential.'
